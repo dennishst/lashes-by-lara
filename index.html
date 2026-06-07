@@ -41,7 +41,7 @@
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
     .hamburger.open span:nth-child(2) { opacity: 0; }
     .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-    .mobile-menu { display: none; position: fixed; inset: 64px 0 0 0; background: var(--black); z-index: 199; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-menu { display: none; position: fixed; inset: 0; background: var(--black); z-index: 198; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; padding-top: 190px; }
     .mobile-menu.open { display: flex; }
     .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.3rem; letter-spacing: .05em; cursor: pointer; }
 
@@ -186,10 +186,12 @@
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      nav { justify-content: center; }
-      nav .hamburger { position: absolute; right: 5vw; }
+      nav { justify-content: center; position: relative; }
+      nav .hamburger { position: absolute; right: 5vw; top: 50%; transform: translateY(-50%); }
       nav.scrolled { height: 100px; }
       nav.scrolled .logo-img { height: 80px; }
+      nav.menu-open { height: 190px !important; }
+      nav.menu-open .logo-img { height: 170px !important; }
       .hamburger { display: flex; }
       #hero { grid-template-columns: 1fr; padding: 56px 5vw 60px; min-height: auto; gap: 2.5rem; }
       .hero-img-placeholder { order: -1; aspect-ratio: 16/10; }
@@ -597,8 +599,16 @@
   // ── HAMBURGER ──
   const hamburger = document.getElementById('hamburger');
   const mobileMenu = document.getElementById('mobileMenu');
-  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
-  function closeMobile() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    nav.classList.toggle('menu-open');
+  });
+  function closeMobile() {
+    hamburger.classList.remove('open');
+    mobileMenu.classList.remove('open');
+    nav.classList.remove('menu-open');
+  }
 
   // ── SCROLL ──
   function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }

@@ -186,8 +186,10 @@
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
-      nav.scrolled { height: 190px !important; }
-      nav.scrolled .logo-img { height: 170px !important; }
+      nav { justify-content: center; }
+      nav .hamburger { position: absolute; right: 5vw; }
+      nav.scrolled { height: 100px; }
+      nav.scrolled .logo-img { height: 80px; }
       .hamburger { display: flex; }
       #hero { grid-template-columns: 1fr; padding: 56px 5vw 60px; min-height: auto; gap: 2.5rem; }
       .hero-img-placeholder { order: -1; aspect-ratio: 16/10; }
@@ -601,15 +603,13 @@
   // ── SCROLL ──
   function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }
 
-  // Logo shrink on scroll (desktop only)
+  // Logo shrink on scroll
   const nav = document.querySelector('nav');
   window.addEventListener('scroll', () => {
-    if (window.innerWidth > 768) {
-      if (window.scrollY > 60) {
-        nav.classList.add('scrolled');
-      } else {
-        nav.classList.remove('scrolled');
-      }
+    if (window.scrollY > 60) {
+      nav.classList.add('scrolled');
+    } else {
+      nav.classList.remove('scrolled');
     }
   });
 

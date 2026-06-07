@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lashes by Lara – Wimpernstudio Rathenow</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --black: #111111; --white: #ffffff;
+      --lavender: #e8e2f5; --purple: #7c5cbf;
+      --purple-light: #9b7dd4; --gray: #f5f3f8;
+      --text: #2a2a2a; --muted: #666;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--white); font-size: 15px; line-height: 1.6; overflow-x: hidden; }
+
+    /* ── NAV ── */
+    nav { background: var(--black); position: sticky; top: 0; z-index: 200; padding: 0 5vw; display: flex; align-items: center; justify-content: space-between; height: 64px; }
+    .logo { display: flex; align-items: center; text-decoration: none; }
+    .logo-img { height: 44px; width: auto; object-fit: contain; }
+    .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; color: var(--white); letter-spacing: .02em; }
+    .logo-text span { color: var(--purple-light); }
+    .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
+    .nav-links a { color: rgba(255,255,255,.8); text-decoration: none; font-size: .85rem; font-weight: 400; letter-spacing: .03em; transition: color .2s; cursor: pointer; }
+    .nav-links a:hover { color: var(--white); }
+    .btn { display: inline-block; padding: .55rem 1.4rem; border-radius: 50px; font-family: 'DM Sans', sans-serif; font-size: .85rem; font-weight: 500; cursor: pointer; text-decoration: none; transition: all .25s; letter-spacing: .02em; border: none; }
+    .btn-purple { background: var(--purple); color: var(--white); border: 1.5px solid var(--purple); }
+    .btn-purple:hover { background: var(--purple-light); border-color: var(--purple-light); }
+    .btn-outline-white { background: transparent; color: var(--white); border: 1.5px solid var(--white); }
+    .btn-outline-white:hover { background: var(--white); color: var(--black); }
+    .btn-outline-purple { background: transparent; color: var(--purple); border: 1.5px solid var(--purple); }
+    .btn-outline-purple:hover { background: var(--purple); color: var(--white); }
+    .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
+    .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: transform .3s, opacity .3s; }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .mobile-menu { display: none; position: fixed; inset: 64px 0 0 0; background: var(--black); z-index: 199; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; }
+    .mobile-menu.open { display: flex; }
+    .mobile-menu a { color: var(--white); text-decoration: none; font-size: 1.3rem; letter-spacing: .05em; cursor: pointer; }
+
+    /* ── HERO ── */
+    #hero { background: var(--black); color: var(--white); padding: 80px 5vw; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; min-height: 88vh; }
+    .hero-label { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--purple-light); margin-bottom: 1.2rem; }
+    .hero-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2.8rem, 5vw, 4.5rem); font-weight: 600; line-height: 1.05; margin-bottom: 1.4rem; }
+    .hero-sub { color: rgba(255,255,255,.65); font-size: .95rem; max-width: 380px; margin-bottom: 2rem; line-height: 1.7; }
+    .hero-img-placeholder { width: 100%; aspect-ratio: 4/3; background: linear-gradient(135deg,#2a2a2a 0%,#3a3040 100%); border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: .8rem; color: rgba(255,255,255,.3); letter-spacing: .1em; }
+    .hero-img { width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: center top; border-radius: 4px; display: block; }
+    .about-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; border-radius: 6px; display: block; }
+
+    /* ── SERVICES ── */
+    #services { background: var(--lavender); padding: 90px 5vw; text-align: center; }
+    .section-label { font-size: .75rem; letter-spacing: .14em; text-transform: uppercase; color: var(--purple); margin-bottom: .8rem; }
+    .section-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,4vw,3rem); font-weight: 600; line-height: 1.15; color: var(--black); margin-bottom: 3rem; }
+    .services-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 1.2rem; max-width: 1100px; margin: 0 auto 3rem; }
+    .service-card { background: var(--white); border-radius: 6px; padding: 2rem 1.4rem 1.6rem; text-align: left; transition: transform .25s, box-shadow .25s; }
+    .service-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,.1); }
+    .service-icon-img { width: 80px; height: 60px; object-fit: contain; object-position: center; margin-bottom: 1rem; display: block; filter: brightness(0); }
+    .service-card-img-wrap { aspect-ratio: 16/9; overflow: hidden; border-radius: 0; margin-bottom: 1.2rem; }
+    .service-card-img { width: 100%; height: 100%; object-fit: cover; object-position: center; display: block; transition: transform .4s; }
+    .service-card:hover .service-card-img { transform: scale(1.04); }
+    .service-card-body { display: flex; flex-direction: column; flex: 1; padding-top: .2rem; }
+    .service-card-body p { flex: 1; }
+    .service-card { padding: 0; overflow: hidden; }
+    .service-card-body { padding: 0 1.4rem 1.6rem; }
+    .service-modal-hero { margin: -1.8rem -2rem 1.4rem; }
+    .service-modal-hero-img { width: 100%; aspect-ratio: 16/7; object-fit: cover; object-position: center; display: block; }
+    .service-card { display: flex; flex-direction: column; }
+    .service-card p { flex: 1; }
+    .service-icon-lift { width: 80px; height: 60px; overflow: hidden; margin-bottom: 1rem; position: relative; }
+    .service-icon-lift img { width: 200%; height: 200%; object-fit: cover; object-position: 0 0; position: absolute; top: 0; left: 0; transform: scale(0.5); transform-origin: top left; filter: brightness(0); }
+    .service-icon { font-size: 2.2rem; margin-bottom: 1rem; display: block; }
+    .service-card h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; margin-bottom: .6rem; color: var(--black); }
+    .service-card p { font-size: .82rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.2rem; }
+
+    /* ── ÜBER MICH ── */
+    #ueber-mich { background: var(--white); padding: 90px 5vw; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; max-width: 1200px; margin: 0 auto; }
+    .about-img-placeholder { width: 100%; aspect-ratio: 3/4; background: linear-gradient(160deg,#e8e2f5 0%,#d4c8ef 100%); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: .8rem; color: var(--muted); letter-spacing: .1em; }
+    .about-img { width: 100%; aspect-ratio: 3/4; object-fit: cover; object-position: center top; border-radius: 6px; display: block; }
+    .about-content .section-label { text-align: left; }
+    .about-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,3.5vw,2.8rem); font-weight: 600; line-height: 1.15; color: var(--black); margin-bottom: 1.4rem; }
+    .about-title em { color: var(--purple); font-style: italic; text-decoration: underline; text-underline-offset: 4px; }
+    .about-text { color: var(--muted); font-size: .93rem; line-height: 1.8; margin-bottom: 2rem; }
+
+    /* ── TESTIMONIAL SLIDER ── */
+    #testimonial { background: var(--black); color: var(--white); padding: 90px 5vw; text-align: center; }
+    .slider-wrapper { overflow: hidden; }
+    .slider-track { display: flex; transition: transform .5s cubic-bezier(.4,0,.2,1); }
+    .slide { min-width: 100%; padding: 0 2rem; }
+    .stars { font-size: 1.4rem; color: var(--purple-light); letter-spacing: 4px; margin-bottom: 2rem; }
+    .testimonial-quote { font-family: 'Cormorant Garamond', serif; font-size: clamp(1.6rem,3vw,2.4rem); font-weight: 400; font-style: italic; max-width: 780px; margin: 0 auto 1.4rem; line-height: 1.35; }
+    .testimonial-quote strong { color: var(--purple-light); font-style: italic; font-weight: 400; }
+    .testimonial-author { font-size: .82rem; color: rgba(255,255,255,.4); letter-spacing: .1em; }
+    .slider-dots { display: flex; justify-content: center; gap: .6rem; margin-top: 2.5rem; }
+    .slider-dot { width: 8px; height: 8px; border-radius: 50%; background: rgba(255,255,255,.25); cursor: pointer; border: none; transition: background .3s, transform .3s; padding: 0; }
+    .slider-dot.active { background: var(--purple-light); transform: scale(1.3); }
+    .slider-nav { display: flex; justify-content: center; gap: 1rem; margin-top: 1.5rem; }
+    .slider-btn { background: rgba(255,255,255,.1); border: 1px solid rgba(255,255,255,.2); color: var(--white); width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 1rem; transition: background .2s; display: flex; align-items: center; justify-content: center; }
+    .slider-btn:hover { background: rgba(255,255,255,.2); }
+
+    /* ── CTA ── */
+    #cta { background: var(--purple); color: var(--white); padding: 80px 5vw; text-align: center; }
+    .cta-title { font-family: 'Cormorant Garamond', serif; font-size: clamp(2rem,4vw,3rem); font-weight: 600; margin-bottom: .8rem; }
+    .cta-sub { font-size: .93rem; opacity: .8; margin-bottom: 2rem; }
+
+    /* ── FOOTER ── */
+    footer { background: var(--black); color: rgba(255,255,255,.55); padding: 60px 5vw 32px; }
+    .footer-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 2.5rem; padding-bottom: 40px; border-bottom: 1px solid rgba(255,255,255,.08); margin-bottom: 24px; }
+    .footer-brand .logo { margin-bottom: 1rem; }
+    .footer-brand p { font-size: .8rem; line-height: 1.7; }
+    .footer-col h4 { font-size: .75rem; letter-spacing: .1em; text-transform: uppercase; color: var(--white); margin-bottom: 1rem; }
+    .footer-col a { display: block; color: rgba(255,255,255,.45); text-decoration: none; font-size: .83rem; margin-bottom: .5rem; transition: color .2s; cursor: pointer; }
+    .footer-col a:hover { color: var(--white); }
+    .footer-bottom { font-size: .78rem; text-align: center; color: rgba(255,255,255,.25); }
+
+    /* ── MODAL BASE ── */
+    .modal-overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,.6); z-index: 500; align-items: center; justify-content: center; padding: 1rem; backdrop-filter: blur(4px); }
+    .modal-overlay.open { display: flex; }
+    .modal { background: var(--white); border-radius: 12px; width: 100%; max-width: 560px; max-height: 90vh; overflow-y: auto; position: relative; animation: modalIn .3s cubic-bezier(.4,0,.2,1); }
+    .modal-wide { max-width: 720px; }
+    @keyframes modalIn { from { opacity: 0; transform: translateY(20px) scale(.97); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    .modal-header { padding: 1.8rem 2rem 1.2rem; border-bottom: 1px solid #eee; display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; }
+    .modal-header h2 { font-family: 'Cormorant Garamond', serif; font-size: 1.7rem; font-weight: 600; color: var(--black); line-height: 1.2; }
+    .modal-header .modal-subtitle { font-size: .82rem; color: var(--muted); margin-top: .3rem; }
+    .modal-close { background: none; border: none; font-size: 1.4rem; cursor: pointer; color: var(--muted); line-height: 1; padding: .2rem; flex-shrink: 0; transition: color .2s; }
+    .modal-close:hover { color: var(--black); }
+    .modal-body { padding: 1.8rem 2rem; }
+
+    /* ── TERMIN FORMULAR ── */
+    .form-group { margin-bottom: 1.2rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+    .form-group label { display: block; font-size: .8rem; font-weight: 500; color: var(--text); margin-bottom: .4rem; letter-spacing: .03em; text-transform: uppercase; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: .7rem 1rem; border: 1.5px solid #e0e0e0; border-radius: 8px;
+      font-family: 'DM Sans', sans-serif; font-size: .9rem; color: var(--text);
+      background: var(--white); transition: border-color .2s, box-shadow .2s; outline: none;
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--purple); box-shadow: 0 0 0 3px rgba(124,92,191,.12); }
+    .form-group select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 1rem center; padding-right: 2.5rem; }
+    .checkbox-group { display: flex; align-items: flex-start; gap: .7rem; }
+    .checkbox-group input[type="checkbox"] { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--purple); flex-shrink: 0; cursor: pointer; }
+    .checkbox-group label { font-size: .82rem; color: var(--muted); line-height: 1.5; text-transform: none; font-weight: 400; cursor: pointer; }
+    .checkbox-group a { color: var(--purple); }
+    .form-note { font-size: .8rem; color: var(--muted); background: var(--lavender); border-radius: 8px; padding: .8rem 1rem; margin-bottom: 1.4rem; display: flex; align-items: center; gap: .5rem; }
+    .form-note::before { content: "ℹ️"; }
+    .form-submit { width: 100%; padding: .9rem; font-size: 1rem; font-weight: 500; }
+    .form-success { text-align: center; padding: 2rem 0; }
+    .form-success .success-icon { font-size: 3rem; margin-bottom: 1rem; }
+    .form-success h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.6rem; margin-bottom: .6rem; }
+    .form-success p { color: var(--muted); font-size: .9rem; }
+
+    /* ── SERVICE DETAIL ── */
+    .service-detail-icon { font-size: 3rem; text-align: center; margin-bottom: 1.2rem; }
+    .service-detail-desc { color: var(--muted); font-size: .93rem; line-height: 1.8; margin-bottom: 1.4rem; }
+    .service-detail-list { list-style: none; margin-bottom: 1.6rem; }
+    .service-detail-list li { display: flex; align-items: flex-start; gap: .7rem; font-size: .88rem; color: var(--text); margin-bottom: .6rem; }
+    .service-detail-list li::before { content: "✓"; color: var(--purple); font-weight: 600; flex-shrink: 0; }
+    .service-detail-price { background: var(--lavender); border-radius: 8px; padding: 1rem 1.2rem; font-size: .88rem; color: var(--text); display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.4rem; }
+    .service-detail-price strong { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; color: var(--purple); }
+
+    /* ── PREISE ── */
+    .price-section { margin-bottom: 2rem; }
+    .price-section h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.3rem; font-weight: 600; color: var(--black); margin-bottom: 1rem; padding-bottom: .5rem; border-bottom: 1px solid #eee; }
+    .price-row { display: flex; justify-content: space-between; align-items: center; padding: .65rem 0; border-bottom: 1px solid #f5f5f5; font-size: .88rem; }
+    .price-row:last-child { border-bottom: none; }
+    .price-row span:last-child { font-weight: 500; color: var(--purple); white-space: nowrap; margin-left: 1rem; }
+    .price-note { font-size: .78rem; color: var(--muted); margin-top: 1rem; font-style: italic; }
+
+    /* ── IMPRESSUM / DATENSCHUTZ ── */
+    .legal-content h3 { font-family: 'Cormorant Garamond', serif; font-size: 1.2rem; font-weight: 600; color: var(--black); margin: 1.4rem 0 .5rem; }
+    .legal-content h3:first-child { margin-top: 0; }
+    .legal-content p { font-size: .85rem; color: var(--muted); line-height: 1.75; margin-bottom: .6rem; }
+    .legal-content a { color: var(--purple); }
+
+    /* ── KONTAKT MODAL ── */
+    .kontakt-info { display: flex; flex-direction: column; gap: .8rem; margin-bottom: 1.6rem; }
+    .kontakt-item { display: flex; align-items: center; gap: .8rem; font-size: .88rem; color: var(--text); }
+    .kontakt-item .k-icon { width: 36px; height: 36px; background: var(--lavender); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+
+    /* ── MOBILE ── */
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+      #hero { grid-template-columns: 1fr; padding: 56px 5vw 60px; min-height: auto; gap: 2.5rem; }
+      .hero-img-placeholder { order: -1; aspect-ratio: 16/10; }
+      .hero-img { order: -1; aspect-ratio: 16/10; }
+      .services-grid { grid-template-columns: 1fr 1fr; gap: 1rem; }
+      #ueber-mich { grid-template-columns: 1fr; gap: 2.5rem; padding: 70px 5vw; }
+      .about-img-placeholder { aspect-ratio: 4/3; }
+      .footer-top { grid-template-columns: 1fr 1fr; gap: 2rem; }
+      .footer-brand { grid-column: 1 / -1; }
+      .form-row { grid-template-columns: 1fr; }
+      .modal-body { padding: 1.4rem; }
+      .modal-header { padding: 1.4rem 1.4rem 1rem; }
+    }
+    @media (max-width: 480px) {
+      .services-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ══════════════ NAV ══════════════ -->
+<nav>
+  <a href="#" class="logo">
+    <img src="lashes_logo.svg" alt="Lashes by Lara" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="logo-text" style="display:none">Lashes <span>by Lara</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a onclick="scrollToSection('services')">Services</a></li>
+    <li><a onclick="openModal('modalPreise')">Preise</a></li>
+    <li><a onclick="scrollToSection('ueber-mich')">Über mich</a></li>
+    <li><a onclick="openModal('modalTermin')" class="btn btn-purple">Termin anfragen</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger"><span></span><span></span><span></span></button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a onclick="closeMobile();scrollToSection('services')">Services</a>
+  <a onclick="closeMobile();openModal('modalPreise')">Preise</a>
+  <a onclick="closeMobile();scrollToSection('ueber-mich')">Über mich</a>
+  <a onclick="closeMobile();openModal('modalTermin')" class="btn btn-purple">Termin anfragen</a>
+</div>
+
+<!-- ══════════════ HERO ══════════════ -->
+<section id="hero">
+  <div class="hero-text">
+    <p class="hero-label">Wimpernstudio Rathenow</p>
+    <h1 class="hero-title">Dein Blick.<br>Dein Statement.</h1>
+    <p class="hero-sub">Professionelle Wimpernverlängerung &amp; Wimpernlifting. Für den Look, der dich morgens lächeln lässt. Persönlich. Präzise. Unvergesslich.</p>
+    <button onclick="openModal('modalTermin')" class="btn btn-outline-white">Termin anfragen</button>
+  </div>
+  <img class="hero-img" src="https://wunderderm.de/wp-content/uploads/2025/01/wunderderm-kosmetikstudio-anna-dolgaja-wimpernverlaengerung-titelbild-augsburg-scaled.jpg" alt="Wimpernverlängerung" />
+</section>
+
+<!-- ══════════════ SERVICES ══════════════ -->
+<section id="services">
+  <p class="section-label">Services</p>
+  <h2 class="section-title">Augen die eine<br>Geschichte erzählen.</h2>
+      <div class="services-grid">
+      <div class="service-card">
+        <div class="service-card-img-wrap">
+          <img src="https://cdn02.plentymarkets.com/hrkvjp0k0b7d/item/images/1050/middle/unicorn-flat-lashes-d-1zu1-technik-vorher-nachher-effekt.jpg" alt="1:1 Methode" class="service-card-img" />
+        </div>
+        <div class="service-card-body">
+          <h3>1:1 Methode</h3>
+          <p>Bei der 1:1 Methode wird je eine künstliche Wimper auf eine Naturwimper appliziert.</p>
+          <button onclick="openServiceModal('classic')" class="btn btn-outline-purple">Mehr erfahren</button>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-card-img-wrap">
+          <img src="https://www.beautyaboutyou.de/mt-content/uploads/2022/03/_2x4.jpg" alt="Volumentechnik" class="service-card-img" />
+        </div>
+        <div class="service-card-body">
+          <h3>Volumentechnik</h3>
+          <p>Bei der Volumentechnik werden mehrere feine Wimpern gefächert und auf eine Naturwimper appliziert.</p>
+          <button onclick="openServiceModal('volume')" class="btn btn-outline-purple">Mehr erfahren</button>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-card-img-wrap">
+          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5r_9jvIReKPtnvmksOEfccuN8gNI5rn7OuCljBtKz3Ag8JOGVsgTzD5nD&s=10" alt="Wimpernlifting" class="service-card-img" />
+        </div>
+        <div class="service-card-body">
+          <h3>Wimpernlifting</h3>
+          <p>Perfekt geschwungene Wimpern, ohne Wimpernzange oder Mascara.</p>
+          <button onclick="openServiceModal('lifting')" class="btn btn-outline-purple">Mehr erfahren</button>
+        </div>
+      </div>
+      <div class="service-card">
+        <div class="service-card-img-wrap">
+          <img src="https://www.sarayaman.com.tr/de/wp-content/uploads/2024/02/der-goldene-schnitt-fur-perfekte-augenbrauen-form.jpg" alt="Augenbrauen" class="service-card-img" />
+        </div>
+        <div class="service-card-body">
+          <h3>Augenbrauen</h3>
+          <p>Wir bringen Deine Augenbrauen in Form.</p>
+          <button onclick="openServiceModal('brauen')" class="btn btn-outline-purple">Mehr erfahren</button>
+        </div>
+      </div>
+    </div>
+    <button onclick="openModal('modalTermin')" class="btn btn-purple">Termin anfragen</button>
+</section>
+
+<!-- ══════════════ ÜBER MICH ══════════════ -->
+<section>
+  <div id="ueber-mich">
+    <img class="about-img" src="https://calisibeauty.de/cdn/shop/files/carolina_founder_copy.jpg?crop=center&height=3079&v=1733925877&width=2793" alt="Lara" />
+    <div class="about-content">
+      <p class="section-label">Über mich</p>
+      <h2 class="about-title">Gute Wimpern <em>brauchen keinen</em> Mascara.</h2>
+      <p class="about-text">Jedes Set wird individuell auf deine Augenform, deinen Alltag und deinen Stil angepasst. Weil du es verdienst, morgens aufzuwachen und schon perfekt auszusehen.</p>
+      <button onclick="openModal('modalTermin')" class="btn btn-purple">Termin anfragen</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════ TESTIMONIAL SLIDER ══════════════ -->
+<section id="testimonial">
+  <div class="slider-wrapper">
+    <div class="slider-track" id="sliderTrack">
+      <div class="slide">
+        <p class="stars">★★★★★</p>
+        <blockquote class="testimonial-quote">„Lara wurde mir empfohlen und ich war <strong>direkt sehr zufrieden</strong> und freue mich auf meinen nächsten Besuch!"</blockquote>
+        <p class="testimonial-author">— Saskia, 32 —</p>
+      </div>
+      <div class="slide">
+        <p class="stars">★★★★★</p>
+        <blockquote class="testimonial-quote">„Absolut <strong>traumhafte Wimpern</strong> – ich bin jede Auffüllung wieder begeistert. Lara arbeitet so präzise und liebevoll!"</blockquote>
+        <p class="testimonial-author">— Melanie, 27 —</p>
+      </div>
+      <div class="slide">
+        <p class="stars">★★★★★</p>
+        <blockquote class="testimonial-quote">„Das Wimpernlifting hat mein Morgenritual <strong>komplett verändert</strong>. Aufwachen und sofort schön aussehen – einfach genial."</blockquote>
+        <p class="testimonial-author">— Jana, 35 —</p>
+      </div>
+      <div class="slide">
+        <p class="stars">★★★★★</p>
+        <blockquote class="testimonial-quote">„Super entspannte Atmosphäre, <strong>sehr professionell</strong> und das Ergebnis ist jedes Mal besser als erwartet. Klare Empfehlung!"</blockquote>
+        <p class="testimonial-author">— Lisa, 29 —</p>
+      </div>
+    </div>
+  </div>
+  <div class="slider-nav">
+    <button class="slider-btn" onclick="slideMove(-1)">&#8592;</button>
+    <button class="slider-btn" onclick="slideMove(1)">&#8594;</button>
+  </div>
+  <div class="slider-dots" id="sliderDots"></div>
+</section>
+
+<!-- ══════════════ CTA ══════════════ -->
+<section id="cta">
+  <h2 class="cta-title">Bereit für deine Wimpern?</h2>
+  <p class="cta-sub">Frage jetzt deinen Wunschtermin an. Online, schnell und unkompliziert.</p>
+  <button onclick="openModal('modalTermin')" class="btn btn-outline-white">Termin anfragen</button>
+</section>
+
+<!-- ══════════════ FOOTER ══════════════ -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <a href="#" class="logo">
+    <img src="lashes_logo.svg" alt="Lashes by Lara" class="logo-img" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+    <span class="logo-text" style="display:none">Lashes <span>by Lara</span></span>
+  </a>
+      <p>Adresse eintragen<br>Telefon eintragen<br>Mail eintragen</p>
+    </div>
+    <div class="footer-col">
+      <h4>Services</h4>
+      <a onclick="openServiceModal('classic')">1:1 Methode</a>
+      <a onclick="openServiceModal('volume')">Volumentechnik</a>
+      <a onclick="openServiceModal('lifting')">Wimpernlifting</a>
+      <a onclick="openServiceModal('brauen')">Augenbrauen</a>
+    </div>
+    <div class="footer-col">
+      <h4>Über mich</h4>
+      <a href="https://instagram.com" target="_blank">Instagram</a>
+      <a onclick="openModal('modalTermin')">Termin anfragen</a>
+      <a onclick="openModal('modalPreise')">Preise</a>
+    </div>
+    <div class="footer-col">
+      <h4>Infos</h4>
+      <a onclick="openModal('modalKontakt')">Kontakt</a>
+      <a onclick="openModal('modalImpressum')">Impressum</a>
+      <a onclick="openModal('modalDatenschutz')">Datenschutz</a>
+    </div>
+  </div>
+  <p class="footer-bottom">© 2026 Lashes by Lara. Alle Rechte vorbehalten.</p>
+</footer>
+
+
+<!-- ══════════════════════════════════════════ -->
+<!--              MODALS                        -->
+<!-- ══════════════════════════════════════════ -->
+
+<!-- ── TERMIN ── -->
+<div class="modal-overlay" id="modalTermin" onclick="overlayClose(event,'modalTermin')">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h2>Termin anfragen</h2>
+        <p class="modal-subtitle">Füll das Formular aus – ich melde mich binnen 24 Stunden.</p>
+      </div>
+      <button class="modal-close" onclick="closeModal('modalTermin')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div id="terminForm">
+        <div class="form-group">
+          <label>Service wählen</label>
+          <select id="terminService">
+            <option value="">– Bitte wählen –</option>
+            <option>1:1 Methode (Classic)</option>
+            <option>Volumentechnik</option>
+            <option>Wimpernlifting</option>
+            <option>Augenbrauen</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Wunschdatum</label>
+            <input type="date" id="terminDatum" />
+          </div>
+          <div class="form-group">
+            <label>Wunschzeit</label>
+            <select id="terminZeit">
+              <option value="">– Uhrzeit –</option>
+              <option>09:00</option><option>10:00</option><option>11:00</option>
+              <option>12:00</option><option>13:00</option><option>14:00</option>
+              <option>15:00</option><option>16:00</option><option>17:00</option>
+            </select>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group">
+            <label>Vorname</label>
+            <input type="text" id="terminVorname" placeholder="Maria" />
+          </div>
+          <div class="form-group">
+            <label>Nachname</label>
+            <input type="text" id="terminNachname" placeholder="Müller" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label>E-Mail</label>
+          <input type="email" id="terminEmail" placeholder="maria@beispiel.de" />
+        </div>
+        <div class="form-group">
+          <label>Telefon</label>
+          <input type="tel" id="terminTelefon" placeholder="+49 160 000 0000" />
+        </div>
+        <div class="form-note">Ich bestätige deinen Termin persönlich binnen 24 Stunden per SMS oder E-Mail.</div>
+        <div class="form-group">
+          <div class="checkbox-group">
+            <input type="checkbox" id="terminDatenschutz" />
+            <label for="terminDatenschutz">Ich habe die <a onclick="openModal('modalDatenschutz')">Datenschutzerklärung</a> gelesen und stimme der Verarbeitung meiner Daten zur Terminanfrage zu.</label>
+          </div>
+        </div>
+        <button class="btn btn-purple form-submit" onclick="submitTermin()">Vormerken ✦</button>
+      </div>
+      <div id="terminSuccess" class="form-success" style="display:none;">
+        <div class="success-icon">✨</div>
+        <h3>Anfrage gesendet!</h3>
+        <p>Danke! Ich melde mich binnen 24 Stunden bei dir zur Terminbestätigung.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── SERVICE DETAIL ── -->
+<div class="modal-overlay" id="modalService" onclick="overlayClose(event,'modalService')">
+  <div class="modal">
+    <div class="modal-header">
+      <div>
+        <h2 id="serviceModalTitle">Service</h2>
+      </div>
+      <button class="modal-close" onclick="closeModal('modalService')">✕</button>
+    </div>
+    <div class="modal-body" id="serviceModalBody"></div>
+  </div>
+</div>
+
+<!-- ── PREISE ── -->
+<div class="modal-overlay" id="modalPreise" onclick="overlayClose(event,'modalPreise')">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <div><h2>Preisübersicht</h2><p class="modal-subtitle">Alle Preise inkl. MwSt.</p></div>
+      <button class="modal-close" onclick="closeModal('modalPreise')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="price-section">
+        <h3>〰 1:1 Methode (Classic)</h3>
+        <div class="price-row"><span>Erstanlage (ca. 90–120 Min.)</span><span>ab 89 €</span></div>
+        <div class="price-row"><span>Auffüllung 2 Wochen (ca. 45–60 Min.)</span><span>ab 49 €</span></div>
+        <div class="price-row"><span>Auffüllung 3 Wochen (ca. 60 Min.)</span><span>ab 59 €</span></div>
+        <div class="price-row"><span>Auffüllung 4 Wochen (ca. 75 Min.)</span><span>ab 69 €</span></div>
+      </div>
+      <div class="price-section">
+        <h3>𝄐 Volumentechnik</h3>
+        <div class="price-row"><span>Erstanlage (ca. 120–150 Min.)</span><span>ab 109 €</span></div>
+        <div class="price-row"><span>Auffüllung 2 Wochen (ca. 60 Min.)</span><span>ab 59 €</span></div>
+        <div class="price-row"><span>Auffüllung 3 Wochen (ca. 75 Min.)</span><span>ab 69 €</span></div>
+        <div class="price-row"><span>Auffüllung 4 Wochen (ca. 90 Min.)</span><span>ab 79 €</span></div>
+      </div>
+      <div class="price-section">
+        <h3>👁 Wimpernlifting</h3>
+        <div class="price-row"><span>Wimpernlifting (ca. 60 Min.)</span><span>ab 55 €</span></div>
+        <div class="price-row"><span>Wimpernlifting inkl. Färbung</span><span>ab 65 €</span></div>
+      </div>
+      <div class="price-section">
+        <h3>⌇ Augenbrauen</h3>
+        <div class="price-row"><span>Augenbrauen Zupfen &amp; Formen</span><span>ab 15 €</span></div>
+        <div class="price-row"><span>Augenbrauen Färben</span><span>ab 10 €</span></div>
+        <div class="price-row"><span>Augenbrauen Zupfen &amp; Färben</span><span>ab 22 €</span></div>
+      </div>
+      <p class="price-note">* Preise können je nach Aufwand variieren. Genaue Preise werden beim Erstgespräch besprochen.</p>
+      <button onclick="closeModal('modalPreise');openModal('modalTermin')" class="btn btn-purple form-submit" style="margin-top:1.4rem;">Termin anfragen</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── KONTAKT ── -->
+<div class="modal-overlay" id="modalKontakt" onclick="overlayClose(event,'modalKontakt')">
+  <div class="modal">
+    <div class="modal-header">
+      <div><h2>Kontakt</h2></div>
+      <button class="modal-close" onclick="closeModal('modalKontakt')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="kontakt-info">
+        <div class="kontakt-item"><div class="k-icon">📍</div><span>Adresse eintragen, Rathenow</span></div>
+        <div class="kontakt-item"><div class="k-icon">📞</div><span>Telefon eintragen</span></div>
+        <div class="kontakt-item"><div class="k-icon">✉️</div><span>E-Mail eintragen</span></div>
+        <div class="kontakt-item"><div class="k-icon">📸</div><span>Instagram: @lashesbylara</span></div>
+      </div>
+      <div id="kontaktForm">
+        <div class="form-row">
+          <div class="form-group"><label>Vorname</label><input type="text" id="kVorname" placeholder="Maria" /></div>
+          <div class="form-group"><label>Nachname</label><input type="text" id="kNachname" placeholder="Müller" /></div>
+        </div>
+        <div class="form-group"><label>E-Mail</label><input type="email" id="kEmail" placeholder="maria@beispiel.de" /></div>
+        <div class="form-group"><label>Nachricht</label><textarea id="kNachricht" rows="4" placeholder="Deine Nachricht..."></textarea></div>
+        <button class="btn btn-purple form-submit" onclick="submitKontakt()">Nachricht senden</button>
+      </div>
+      <div id="kontaktSuccess" class="form-success" style="display:none;">
+        <div class="success-icon">💌</div>
+        <h3>Nachricht gesendet!</h3>
+        <p>Danke! Ich melde mich so schnell wie möglich bei dir.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── IMPRESSUM ── -->
+<div class="modal-overlay" id="modalImpressum" onclick="overlayClose(event,'modalImpressum')">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <div><h2>Impressum</h2></div>
+      <button class="modal-close" onclick="closeModal('modalImpressum')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="legal-content">
+        <h3>Angaben gemäß § 5 TMG</h3>
+        <p>Lara [Nachname eintragen]<br>Lashes by Lara<br>[Straße und Hausnummer]<br>14712 Rathenow</p>
+        <h3>Kontakt</h3>
+        <p>Telefon: [Telefonnummer eintragen]<br>E-Mail: [E-Mail eintragen]</p>
+        <h3>Umsatzsteuer-ID</h3>
+        <p>Umsatzsteuer-Identifikationsnummer gemäß § 27 a Umsatzsteuergesetz: [USt-ID eintragen]</p>
+        <h3>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h3>
+        <p>Lara [Nachname eintragen]<br>[Adresse wie oben]</p>
+        <h3>Haftung für Inhalte</h3>
+        <p>Als Dienstanbieter sind wir gemäß § 7 Abs.1 TMG für eigene Inhalte auf diesen Seiten nach den allgemeinen Gesetzen verantwortlich. Nach §§ 8 bis 10 TMG sind wir als Dienstanbieter jedoch nicht verpflichtet, übermittelte oder gespeicherte fremde Informationen zu überwachen oder nach Umständen zu forschen, die auf eine rechtswidrige Tätigkeit hinweisen.</p>
+        <h3>Urheberrecht</h3>
+        <p>Die durch den Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Die Vervielfältigung, Bearbeitung, Verbreitung und jede Art der Verwertung außerhalb der Grenzen des Urheberrechts bedürfen der schriftlichen Zustimmung des jeweiligen Autors bzw. Erstellers.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ── DATENSCHUTZ ── -->
+<div class="modal-overlay" id="modalDatenschutz" onclick="overlayClose(event,'modalDatenschutz')">
+  <div class="modal modal-wide">
+    <div class="modal-header">
+      <div><h2>Datenschutzerklärung</h2></div>
+      <button class="modal-close" onclick="closeModal('modalDatenschutz')">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="legal-content">
+        <h3>1. Datenschutz auf einen Blick</h3>
+        <p>Die folgenden Hinweise geben einen einfachen Überblick darüber, was mit deinen personenbezogenen Daten passiert, wenn du diese Website besuchst.</p>
+        <h3>2. Erhebung und Speicherung personenbezogener Daten</h3>
+        <p>Wenn du über das Kontaktformular oder die Terminanfrage Daten übermittelst (Vorname, Nachname, E-Mail, Telefonnummer), werden diese ausschließlich zur Bearbeitung deiner Anfrage verarbeitet und nicht an Dritte weitergegeben.</p>
+        <h3>3. Deine Rechte</h3>
+        <p>Du hast jederzeit das Recht auf unentgeltliche Auskunft über deine gespeicherten personenbezogenen Daten, deren Herkunft und Empfänger sowie den Zweck der Datenverarbeitung sowie ein Recht auf Berichtigung, Sperrung oder Löschung dieser Daten.</p>
+        <h3>4. Kontakt bei Datenschutzfragen</h3>
+        <p>Bei Fragen zum Datenschutz wende dich an: <a onclick="openModal('modalKontakt')">[E-Mail eintragen]</a></p>
+        <h3>5. Cookies</h3>
+        <p>Diese Website verwendet keine Tracking-Cookies. Es werden lediglich technisch notwendige Daten verarbeitet.</p>
+        <h3>6. Server-Log-Dateien</h3>
+        <p>Der Hosting-Anbieter erhebt automatisch Informationen in Server-Log-Dateien, die dein Browser übermittelt. Diese Daten sind nicht bestimmten Personen zuordenbar und werden nicht mit anderen Datenquellen zusammengeführt.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<script>
+  // ── HAMBURGER ──
+  const hamburger = document.getElementById('hamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => { hamburger.classList.toggle('open'); mobileMenu.classList.toggle('open'); });
+  function closeMobile() { hamburger.classList.remove('open'); mobileMenu.classList.remove('open'); }
+
+  // ── SCROLL ──
+  function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }
+
+  // ── MODAL ──
+  function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
+  function closeModal(id) { document.getElementById(id).classList.remove('open'); document.body.style.overflow=''; }
+  function overlayClose(e, id) { if(e.target === e.currentTarget) closeModal(id); }
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') document.querySelectorAll('.modal-overlay.open').forEach(m => { m.classList.remove('open'); document.body.style.overflow=''; }); });
+
+  // ── SERVICE MODALS ──
+  const serviceData = {
+    classic: { img: 'https://cdn02.plentymarkets.com/hrkvjp0k0b7d/item/images/1050/middle/unicorn-flat-lashes-d-1zu1-technik-vorher-nachher-effekt.jpg',
+      title: '1:1 Methode (Classic)',
+      icon: '〰',
+      desc: 'Die klassische Wimpernverlängerung – zeitlos, natürlich und für jeden Typ geeignet. Bei der 1:1 Methode wird präzise je eine künstliche Wimper auf eine Naturwimper appliziert.',
+      features: ['Natürlich wirkendes Ergebnis', 'Schonend für die Naturwimpern', 'Individuell angepasste Länge & Krümmung', 'Hält 3–4 Wochen mit regelmäßiger Auffüllung', 'Ideal für Erstlinge'],
+      dauer: 'Erstanlage ca. 90–120 Min.',
+      preis: 'ab 89 €'
+    },
+    volume: { img: 'https://www.beautyaboutyou.de/mt-content/uploads/2022/03/_2x4.jpg',
+      title: 'Volumentechnik',
+      icon: '𝄐',
+      desc: 'Maximaler Glamour für einen dramatischen Auftritt. Mehrere superfeine Wimpern werden zu einem Fächer zusammengebaut und auf eine Naturwimper appliziert – für einen üppigen, voluminösen Look.',
+      features: ['Intensiver, voluminöser Look', '2D bis 5D Fächer möglich', 'Schonend durch ultra-leichte Wimpern', 'Ideal für sparse oder dünne Wimpern', 'Langanhaltend & belastbar'],
+      dauer: 'Erstanlage ca. 120–150 Min.',
+      preis: 'ab 109 €'
+    },
+    lifting: { img: 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ5r_9jvIReKPtnvmksOEfccuN8gNI5rn7OuCljBtKz3Ag8JOGVsgTzD5nD&s=10',
+      title: 'Wimpernlifting',
+      icon: '👁',
+      desc: 'Perfekt geschwungene Wimpern ganz ohne Verlängerung oder Mascara. Das Wimpernlifting hebt und krümmt deine natürlichen Wimpern dauerhaft – für einen wachen, strahlenden Blick.',
+      features: ['100% natürliches Ergebnis', 'Kein tägliches Curlen nötig', 'Hält 6–8 Wochen', 'Optional mit Färbung kombinierbar', 'Perfekt für Low-Maintenance-Beauty'],
+      dauer: 'ca. 60 Min.',
+      preis: 'ab 55 €'
+    },
+    brauen: { img: 'https://www.sarayaman.com.tr/de/wp-content/uploads/2024/02/der-goldene-schnitt-fur-perfekte-augenbrauen-form.jpg',
+      title: 'Augenbrauen',
+      icon: '⌇',
+      desc: 'Gepflegte Augenbrauen rahmen das Gesicht perfekt ein. Ob Zupfen, Formen oder Färben – wir bringen deine Brauen in die optimale Form für dein Gesicht.',
+      features: ['Formberatung inklusive', 'Präzises Zupfen nach Gesichtsform', 'Professionelles Färben', 'Schnell & effektiv', 'Wunderbare Kombination mit Wimpernbehandlungen'],
+      dauer: 'ca. 20–30 Min.',
+      preis: 'ab 15 €'
+    }
+  };
+
+  function openServiceModal(key) {
+    const s = serviceData[key];
+    document.getElementById('serviceModalTitle').textContent = s.title;
+    document.getElementById('serviceModalBody').innerHTML = `
+      <div class="service-modal-hero"><img src="${s.img}" alt="${s.title}" class="service-modal-hero-img" /></div>
+      <div style="padding:0 .2rem">
+      <p class="service-detail-desc">${s.desc}</p>
+      <ul class="service-detail-list">${s.features.map(f => `<li>${f}</li>`).join('')}</ul>
+      <div class="service-detail-price"><span>${s.dauer}</span><strong>${s.preis}</strong></div>
+      <button onclick="closeModal('modalService');openModal('modalTermin');document.getElementById('terminService').value='${s.title}'" class="btn btn-purple form-submit">Termin für diesen Service anfragen</button>
+      </div>
+    `;
+    openModal('modalService');
+  }
+
+  // ── TERMIN SUBMIT ──
+  function submitTermin() {
+    const service = document.getElementById('terminService').value;
+    const datum = document.getElementById('terminDatum').value;
+    const zeit = document.getElementById('terminZeit').value;
+    const vorname = document.getElementById('terminVorname').value.trim();
+    const nachname = document.getElementById('terminNachname').value.trim();
+    const email = document.getElementById('terminEmail').value.trim();
+    const telefon = document.getElementById('terminTelefon').value.trim();
+    const datenschutz = document.getElementById('terminDatenschutz').checked;
+    if (!service || !datum || !zeit || !vorname || !nachname || !email || !telefon) { alert('Bitte füll alle Felder aus.'); return; }
+    if (!datenschutz) { alert('Bitte stimme der Datenschutzerklärung zu.'); return; }
+    // TODO: Supabase-Integration hier einfügen
+    // const data = { service, datum, zeit, vorname, nachname, email, telefon };
+    // await supabase.from('terminanfragen').insert([data]);
+    document.getElementById('terminForm').style.display = 'none';
+    document.getElementById('terminSuccess').style.display = 'block';
+  }
+
+  // ── KONTAKT SUBMIT ──
+  function submitKontakt() {
+    const vorname = document.getElementById('kVorname').value.trim();
+    const email = document.getElementById('kEmail').value.trim();
+    const nachricht = document.getElementById('kNachricht').value.trim();
+    if (!vorname || !email || !nachricht) { alert('Bitte füll alle Pflichtfelder aus.'); return; }
+    // TODO: Supabase-Integration hier einfügen
+    document.getElementById('kontaktForm').style.display = 'none';
+    document.getElementById('kontaktSuccess').style.display = 'block';
+  }
+
+  // ── SLIDER ──
+  let currentSlide = 0;
+  const slides = document.querySelectorAll('.slide');
+  const track = document.getElementById('sliderTrack');
+  const dotsContainer = document.getElementById('sliderDots');
+
+  slides.forEach((_, i) => {
+    const dot = document.createElement('button');
+    dot.className = 'slider-dot' + (i === 0 ? ' active' : '');
+    dot.onclick = () => goToSlide(i);
+    dotsContainer.appendChild(dot);
+  });
+
+  function goToSlide(n) {
+    currentSlide = (n + slides.length) % slides.length;
+    track.style.transform = `translateX(-${currentSlide * 100}%)`;
+    document.querySelectorAll('.slider-dot').forEach((d, i) => d.classList.toggle('active', i === currentSlide));
+  }
+  function slideMove(dir) { goToSlide(currentSlide + dir); }
+  setInterval(() => slideMove(1), 5000);
+
+  // ── MIN DATE für Termin ──
+  const dateInput = document.getElementById('terminDatum');
+  const today = new Date().toISOString().split('T')[0];
+  dateInput.min = today;
+</script>
+</body>
+</html>

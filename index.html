@@ -19,9 +19,9 @@
     body { font-family: 'DM Sans', sans-serif; color: var(--text); background: var(--white); font-size: 15px; line-height: 1.6; overflow-x: hidden; }
 
     /* ── NAV ── */
-    nav { background: var(--black); position: sticky; top: 0; z-index: 200; padding: 0 5vw; display: flex; align-items: center; justify-content: space-between; height: 190px; }
+    nav { background: var(--black); position: sticky; top: 0; z-index: 200; padding: 0 5vw; display: flex; align-items: center; justify-content: space-between; height: 190px; transition: height .35s ease; }
     .logo { display: flex; align-items: center; text-decoration: none; }
-    .logo-img { height: 170px; width: auto; object-fit: contain; }
+    .logo-img { height: 170px; width: auto; object-fit: contain; transition: height .35s ease; }
     .logo-text { font-family: 'Cormorant Garamond', serif; font-size: 1.5rem; font-style: italic; color: var(--white); letter-spacing: .02em; }
     .logo-text span { color: var(--purple-light); }
     .nav-links { display: flex; gap: 2rem; align-items: center; list-style: none; }
@@ -34,6 +34,8 @@
     .btn-outline-white:hover { background: var(--white); color: var(--black); }
     .btn-outline-purple { background: transparent; color: var(--purple); border: 1.5px solid var(--purple); }
     .btn-outline-purple:hover { background: var(--purple); color: var(--white); }
+    nav.scrolled { height: 72px; }
+    nav.scrolled .logo-img { height: 52px; }
     .hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; background: none; border: none; padding: 4px; }
     .hamburger span { display: block; width: 24px; height: 2px; background: var(--white); border-radius: 2px; transition: transform .3s, opacity .3s; }
     .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
@@ -184,6 +186,8 @@
     /* ── MOBILE ── */
     @media (max-width: 768px) {
       .nav-links { display: none; }
+      nav.scrolled { height: 190px !important; }
+      nav.scrolled .logo-img { height: 170px !important; }
       .hamburger { display: flex; }
       #hero { grid-template-columns: 1fr; padding: 56px 5vw 60px; min-height: auto; gap: 2.5rem; }
       .hero-img-placeholder { order: -1; aspect-ratio: 16/10; }
@@ -234,7 +238,7 @@
     <p class="hero-sub">Professionelle Wimpernverlängerung &amp; Wimpernlifting. Für den Look, der dich morgens lächeln lässt. Persönlich. Präzise. Unvergesslich.</p>
     <button onclick="openModal('modalTermin')" class="btn btn-outline-white">Termin anfragen</button>
   </div>
-  <img class="hero-img" src="https://wunderderm.de/wp-content/uploads/2025/01/wunderderm-kosmetikstudio-anna-dolgaja-wimpernverlaengerung-titelbild-augsburg-scaled.jpg" alt="Wimpernverlängerung" />
+  <img class="hero-img" src="https://img.magnific.com/fotos-kostenlos/frau-mit-augenklappen-im-hohen-winkel_23-2149627122.jpg?semt=ais_hybrid&w=740&q=80" alt="Wimpernverlängerung" />
 </section>
 
 <!-- ══════════════ SERVICES ══════════════ -->
@@ -596,6 +600,18 @@
 
   // ── SCROLL ──
   function scrollToSection(id) { document.getElementById(id)?.scrollIntoView({behavior:'smooth'}); }
+
+  // Logo shrink on scroll (desktop only)
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.innerWidth > 768) {
+      if (window.scrollY > 60) {
+        nav.classList.add('scrolled');
+      } else {
+        nav.classList.remove('scrolled');
+      }
+    }
+  });
 
   // ── MODAL ──
   function openModal(id) { document.getElementById(id).classList.add('open'); document.body.style.overflow='hidden'; }
